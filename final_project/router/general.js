@@ -45,46 +45,62 @@ public_users.get('/review/:isbn',function (req, res) {
   return books[isbn] ? res.status(200).json(books[isbn].reviews) : res.status(404).json({message: "Book not found"});
 });
 
-/// ==========================================
-// TASK 10-13: Async/Await Axios Implementation
+// ==========================================
+// TASK 10-13: Async/Await Axios Implementation 
 // ==========================================
 
-// Task 10: Get all books using async callback
+// Task 10: Function to retrieve all books using async/await and Axios
+// This route uses axios to fetch the books array from the root endpoint
 public_users.get('/async-get-books', async function (req, res) {
     try {
+        // Fetching all books from the local server
         const response = await axios.get('http://localhost:5000/');
+        // Return the fetched data with a success status code
         return res.status(200).json(response.data);
     } catch (error) {
+        // Error handling for failed request
         return res.status(500).json({message: "Error fetching books"});
     }
 });
 
-// Task 11: Search by ISBN using async
+// Task 11: Function to search for a book by its ISBN using promise callbacks
+// This route retrieves a specific book's details by making an axios call
 public_users.get('/async-get-isbn/:isbn', async function (req, res) {
     try {
+        // Fetching book details by ISBN
         const response = await axios.get('http://localhost:5000/isbn/' + req.params.isbn);
+        // Returning the retrieved book object
         return res.status(200).json(response.data);
     } catch (error) {
+        // Handle case where ISBN is not found
         return res.status(500).json({message: "Error fetching book details"});
     }
 });
 
-// Task 12: Search by Author using async
+// Task 12: Function to search for a book by Author using async/await
+// This route filters the books database by a specific author name
 public_users.get('/async-get-author/:author', async function (req, res) {
     try {
+        // Fetching books by author name
         const response = await axios.get('http://localhost:5000/author/' + req.params.author);
+        // Returning the matched books
         return res.status(200).json(response.data);
     } catch (error) {
+        // Error handling if author is missing
         return res.status(500).json({message: "Error fetching book details"});
     }
 });
 
-// Task 13: Search by Title using async
+// Task 13: Function to search for a book by Title using async/await
+// This endpoint searches the database for a matching book title
 public_users.get('/async-get-title/:title', async function (req, res) {
     try {
+        // Fetching books by title
         const response = await axios.get('http://localhost:5000/title/' + req.params.title);
+        // Returning the successful match
         return res.status(200).json(response.data);
     } catch (error) {
+        // Error handling if title does not exist
         return res.status(500).json({message: "Error fetching book details"});
     }
 });
